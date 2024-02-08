@@ -1,0 +1,16 @@
+@startuml "Example diagram"
+
+mainframe <b>class</b> Диаграмма классов
+
+note "Это пример примечания" as N1
+note "Так изображается класс" as N2
+
+class User {
+    -firstName : string
+    -lastName : string
+    +getFullName(): string
+}
+
+N1 -- N2
+N2 - User
+@enduml

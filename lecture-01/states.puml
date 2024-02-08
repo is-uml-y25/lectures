@@ -1,0 +1,9 @@
+@startuml diagram name
+
+state "Initial" as initial
+state "Finish" as finish
+
+initial --> finish
+
+
+@enduml

@@ -1,0 +1,6 @@
+@startuml diagram name
+start
+:Прийти на лекцию;
+:Уснуть;
+stop
+@enduml

@@ -1,0 +1,20 @@
+@startuml Deployment example
+
+mainframe <b>deployment</b> Диаграмма размещения
+
+node "Сервер" <<device>> {
+    node "Debian 12 Bookworm" <<OS>> {
+        top to bottom direction
+        node "Node.js 20" <<Execution environment>> {
+            component "Express App"
+        }
+
+        node "PostgreSQL" <<DBMS>> {
+            artifact "users" <<schema>>
+        }
+    }
+}
+
+"Node.js 20" -(0- "PostgreSQL"
+
+@enduml

@@ -1,0 +1,57 @@
+@startuml Use case example
+
+mainframe <b>use case</b> "Онлайн-магазин"
+
+note as N0
+    Типы сущностей:
+
+    * Структурные
+    * Поведенческие
+    * Группирующие
+    * Аннотационные
+endnote
+
+actor User as "Пользователь"
+actor RegisteredUser as "Зарегистрированный\nпользователь"
+
+package "Онлайн-магазин" as Store {
+    left to right direction
+
+usecase UC0 as "Просмотреть\nкарточку товара"
+usecase UC1 as "Просмотреть\nсписок товаров"
+usecase UC2 as "Просмотреть\nкорзину"
+usecase UC3 as "Добавить товар\nв корзину"
+}
+
+note as N1
+    Это действующие лица (экторы)
+    с отношением обобщения
+endnote
+
+note as N2
+    Это варианты использования
+    (a.k.a. прецеденты a.k.a. юзкейсы)
+endnote
+
+note as N3 
+    Пакет, единственная
+    группирующая сущность
+endnote
+
+User -- UC0
+User -- UC1
+RegisteredUser -- UC2
+RegisteredUser -- UC3
+User <|- RegisteredUser 
+UC3 .> UC0 : <<extends>>
+UC3 .> UC1 : <<extends>>
+
+N1 .. User
+N1 .. RegisteredUser
+
+UC1 .. N2
+UC2 .. N2
+
+Store .. N3
+
+@enduml
