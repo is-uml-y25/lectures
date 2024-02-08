@@ -1,4 +1,7 @@
-@startuml diagram name
+@startuml "Simple Activity"
+
+mainframe <b>activity</b> "Действия на лекции"
+
 start
 :Прийти на лекцию;
 :Уснуть;
