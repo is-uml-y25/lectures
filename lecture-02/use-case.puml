@@ -1,0 +1,72 @@
+@startuml "Activity diagram Lecture"
+
+left to right direction
+
+mainframe <b>use case</b> Варианты использования системы поддержки клиентов
+
+note as Req <<requirement>>
+    Система поддержки пользователей
+    должна позволять пользователям
+    и операторам службы поддержки
+    общаться в режиме реального времени
+    посредством текстового чата.
+
+    Основная функциональность:
+    1. Отправка сообщений в чат;
+    2. Просмотр диалога;
+    3. Назначение нового диалога с 
+    пользователем на свободного оператора;
+    4. Сбор KPI по операторам;
+    5. Сбор базы контактов.
+endnote
+
+:Клиент: as Client
+:Оператор службы\nподдержки: as Support
+:Менеджер службы\nподдержки: as Manager
+://Пользователь//: as User
+
+Support <|-- Manager
+User <|-- Client
+User <|-- Support
+
+rectangle {
+    usecase "Отправить сообщение" as UC1
+    usecase "Создать диалог" as UC2
+    usecase "Просмотреть текущий диалог" as UC3.1
+    usecase "Просмотреть любой диалог" as UC3.2
+    usecase "Прочитать сообщение" as UC4
+    usecase "Завершить диалог" as UC5
+    usecase "Назначить диалог" as UC6
+    usecase "Передать диалог другому оператору" as UC7
+    usecase "Просмотреть статистику" as UC8
+    usecase "Просмотреть список диалогов" as UC9
+    usecase "Отправить контактные данные" as UC10
+    usecase "Просмотреть список контактов" as UC11
+}
+
+User - UC1
+User - UC3.1
+User - UC4
+User - UC5
+
+Client - UC2
+Client - UC10
+
+Support - UC7
+Support - UC6
+Support - UC9
+Support - UC3.2
+
+Manager - UC8
+Manager - UC11
+
+UC3.1 ..> UC4 : <<include>>
+UC1 ..> UC4 : <<extends>>
+
+UC3.2 ..> UC9 : <<include>>
+
+UC1 <.. UC2 : <<include>>
+
+UC6 <|-- UC7
+
+@enduml
