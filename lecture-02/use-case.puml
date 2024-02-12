@@ -25,17 +25,17 @@ endnote
 :Менеджер службы\nподдержки: as Manager
 ://Пользователь//: as User
 
-Support <|-- Manager
-User <|-- Client
-User <|-- Support
+Support <|- Manager
+Client -|> User
+User <|- Support
 
-rectangle {
+rectangle "Система поддержки пользователей" <<system>> {
     usecase "Отправить сообщение" as UC1
     usecase "Создать диалог" as UC2
-    usecase "Просмотреть текущий диалог" as UC3.1
-    usecase "Просмотреть любой диалог" as UC3.2
     usecase "Прочитать сообщение" as UC4
     usecase "Завершить диалог" as UC5
+    usecase "Просмотреть текущий диалог" as UC3.1
+    usecase "Просмотреть любой диалог" as UC3.2
     usecase "Назначить диалог" as UC6
     usecase "Передать диалог другому оператору" as UC7
     usecase "Просмотреть статистику" as UC8
@@ -44,21 +44,21 @@ rectangle {
     usecase "Просмотреть список контактов" as UC11
 }
 
-User - UC1
-User - UC3.1
-User - UC4
-User - UC5
+Client -- UC2
+Client -- UC10
 
-Client - UC2
-Client - UC10
+User -- UC1
+User -- UC4
+User -- UC3.1
+User -- UC5
 
-Support - UC7
-Support - UC6
-Support - UC9
-Support - UC3.2
+Support -- UC7
+Support -- UC6
+Support -- UC9
+Support -- UC3.2
 
-Manager - UC8
-Manager - UC11
+Manager -- UC8
+Manager -- UC11
 
 UC3.1 ..> UC4 : <<include>>
 UC1 ..> UC4 : <<extends>>
