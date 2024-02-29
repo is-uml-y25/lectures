@@ -1,0 +1,106 @@
+@startuml Class diagram
+note as Props
+    * Имя
+    * Экземпляры
+    * Абстрактность
+    * Видимость
+        * +
+        * -
+        * #
+        * ~
+    * Кратность
+        * 0..*
+        * 1..*
+        * ~~5..3~~
+        * ~~-1..5~~
+        * 3
+    * Обобщения
+    * Область действия
+endnote
+
+note as N2
+* Транзакции
+* Элементы транзакций
+* Что-то связанное с транзакциями
+* Места записи транзакций
+* Каталоги
+* Контейнеры объектов и сами объекты;
+* Внешние системы
+* Роли пользователей
+* Запись деятельности (логи)
+* Места транзакций (физические)
+* Сущности со временем и местом
+* Описание объектов
+* Руководства и прочие документы.
+endnote
+
+note as N3 
+Взять текстовое ТЗ и выделить сущности (кандидаты).
+Убрать лишнее.
+endnote
+
+note as N4
+* **Имя + направление чтения**
+* **Кратность полюса ассоциации**
+* **Агрегация и композиция**
+* Возможность прохода в направлении
+* Роль полюса ассоциации
+* Видимость полюса
+* Упорядоченность объектов
+* Изменяемость
+* **Класс ассоциации**
+endnote
+
+class Message {
+    -sentAt : datetime = now
+    -content : string
+    -state : MessageState
+    -author : User
+    -chat : Chat
+    -attachments : Attachment[0..5]
+    {static} +Message()
+    +send()
+    +markAsRead()
+    +cancel()
+    +edit(newContent: string, newAttachments: Attachments[0..5]) : void
+    +reply()
+}
+
+enum MessageState {
+    SENT = 'sent'
+    RECEIVED
+    READ
+    CANCELED
+}
+
+class Attachment {}
+
+class ClientsCatalog {}
+class AttachmentsCatalog {}
+
+class Chat {}
+
+class PrometheusExporter <<singleton>> {}
+
+abstract class User {}
+class Client {}
+class SupportStaff {}
+class Manager {}
+
+class KPIGoal {}
+
+User <|-- Client
+User <|-- SupportStaff
+SupportStaff <|-- Manager
+
+Message "1..*" --* Chat : < contains
+Message "0..*" o-- "0..5" Attachment
+Message - MessageState
+
+AttachmentsCatalog x--> Attachment
+
+User - Message
+Client - Chat
+Client - ClientsCatalog
+
+@enduml
