@@ -1,0 +1,38 @@
+@startuml Deployment
+
+mainframe **deployment** Системная архитектура
+
+node Client <<device>> {
+    node "Windows 11" <<OS>> {
+        node "Google Chrome 120" <<browser>> {
+            artifact "Vue SPA" <<script>>
+        }
+    }
+}
+
+node "Server" <<device>> {
+    node Hyper-V <<virtualizzationEngine>> {
+        node "RHEL 9.3" <<OS>> {
+            node ".NET 8" <<executionEnvironment>> {
+                artifact "some lib 2" <<library>> as lib2
+                artifact "web server" <<library>> as lib1
+                artifact "main" <<executable>> as main
+                main ..> lib1 : <<use>>
+                main ..> lib2 : <<use>>
+            }
+        }
+
+        node "Ubuntu 24.04" <<OS>> {
+            node "MySQL 8.0" <<DBMS>> {
+                artifact Users <<schema>>
+                artifact Messages <<schema>>
+                artifact Dialogs <<schema>>
+                artifact "..." <<schema>>
+            }
+        }
+    }
+}
+
+lib1 -- "Google Chrome 120" : <<protocol>> HTTPS
+
+@enduml

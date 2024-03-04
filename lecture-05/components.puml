@@ -1,0 +1,41 @@
+@startuml Components Diagram
+
+mainframe **component** Высокоуровневая программная архитектура
+
+[Users]
+component Dialogs {
+    component Message
+    component Dialog
+    component Attachment
+    port messagesPort
+    port dialogsPort
+    port usersPort
+
+    dialogsPort - Dialog
+    messagesPort - Message
+
+    usersPort - Message
+    usersPort - Dialog
+
+    Attachment - Message
+}
+[Metrics]
+[KPI]
+
+() IUsersService
+() IMessagesService
+() IDialogsService
+
+IMessagesService -- messagesPort
+IDialogsService -- dialogsPort
+
+IDialogsService )-- KPI
+
+Users -- IUsersService
+IUsersService )-- usersPort
+
+Metrics --( IMessagesService
+Metrics --( IDialogsService
+Metrics --( IUsersService
+
+@enduml
