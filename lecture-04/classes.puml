@@ -1,4 +1,7 @@
 @startuml Class diagram
+
+mainframe **class** Программная архитектура
+
 note as Props
     * Имя
     * Экземпляры
