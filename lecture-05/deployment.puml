@@ -11,10 +11,10 @@ node Client <<device>> {
 }
 
 node "Server" <<device>> {
-    node Hyper-V <<virtualizzationEngine>> {
+    node Hyper-V <<virtualizationEngine>> {
         node "RHEL 9.3" <<OS>> {
             node ".NET 8" <<executionEnvironment>> {
-                artifact "some lib 2" <<library>> as lib2
+                artifact "DB driver" <<library>> as lib2
                 artifact "web server" <<library>> as lib1
                 artifact "main" <<executable>> as main
                 main ..> lib1 : <<use>>
