@@ -1,0 +1,21 @@
+@startuml Sequence diagram
+activate Client
+Client -> "ATM Interface" : Request to withdraw
+activate "ATM Interface"
+"ATM Interface" -> ":BankingService" : Check balance
+activate ":BankingService"
+activate ":BankingService"
+":BankingService" -> ":BankingService" : Request data
+deactivate ":BankingService"
+":BankingService" --> "ATM Interface" : Balance
+
+alt Enough money
+"ATM Interface" --> Client : Withdraw money
+"ATM Interface" ->> ":BankingService" : Decrease balance
+deactivate ":BankingService"
+else Not enough money
+"ATM Interface" --> Client : Display an error
+end
+deactivate "ATM Interface"
+
+@enduml
