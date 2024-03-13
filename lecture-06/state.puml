@@ -1,0 +1,23 @@
+@startuml State machine diagram
+
+state Opened
+
+state Accepted {
+    state "Needs Clarification" as NC
+    state "In progress" as IP
+    [*] --> IP
+    NC --> IP
+    IP --> NC
+}
+
+state "Marked As Spam" as Spam
+state "Closed"
+
+[*] --> Opened : create dialog \n [no opened dialogs] \n / sendMessage()
+Opened --> Accepted : accept dialog \n [else] \n / sendMessage()
+Opened --> Spam : reject dialog \n [dialog looks like a spam] \n /markAsSpam()
+Accepted --> Closed
+Spam --> [*]
+Closed --> [*]
+
+@enduml
