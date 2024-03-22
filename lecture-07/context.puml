@@ -1,0 +1,17 @@
+@startuml System context diagram
+!include <C4/C4_Container>
+
+Person(Client, "Клиент")
+Person(SupportStaff, "Оператор")
+Person(Manager, "Менеджер")
+
+System(SupportSystem, "Система службы поддержки")
+System_Ext(Prometheus, "Prometheus")
+
+Rel(Client, SupportSystem, "Обращается в")
+Rel(SupportStaff, SupportSystem, "Обрабатывает обращения")
+Rel(Manager, SupportSystem, "Контролирует работу сотрудников")
+
+Rel(SupportSystem, Prometheus, "Экспортирует бизнес-метрики")
+
+@enduml

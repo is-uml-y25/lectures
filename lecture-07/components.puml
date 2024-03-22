@@ -1,0 +1,34 @@
+@startuml Components diagram for backend
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+Container(Frontend, "Фронтенд", "Vue + Vue Router + Pinia")
+ContainerDb(Database, "База данных", "PostgreSQL 16+")
+Container(Files, "Хранилище файлов", "S3-like")
+
+Container_Boundary(Backend, "Бэкенд"){
+    Component(MessagesHandler, "Обработчик сообщений", "Websockets")
+    Component(SecuritySystem, "Система аутентификации", "MS Identity")
+    Component(MessagesController, "Контроллер сообщений", ".NET Core API Controller")
+    Component(MessagesService, "Сервис сообщений", ".NET Core")
+    Component(UsersController, "Контроллер пользователей", ".NET Core API Controller")
+    Component(MetricsController, "Контроллер метрик", ".NET Core API Controller")
+}
+
+System_Ext(Prometheus, "Prometheus")
+
+Rel(Frontend, MessagesHandler, "Передаёт данные по WS")
+Rel(Frontend, MessagesController, "Вызывает методы API")
+Rel(Frontend, UsersController, "Вызывает методы API")
+Rel_U(Prometheus, MetricsController, "Вызывает методы API")
+Rel(MessagesController, SecuritySystem, "Проверяет права доступа")
+Rel(UsersController, SecuritySystem, "Проверяет права доступа")
+Rel(MetricsController, SecuritySystem, "Проверяет права доступа")
+
+Rel(MessagesController, MessagesService, "Вызывает бизнес-логику")
+Rel(MessagesService, Database, "Получает данные")
+
+Rel(Frontend, Files, "Загружает вложения сообщений")
+
+
+@enduml

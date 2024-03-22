@@ -1,0 +1,27 @@
+@startuml Containers diagram
+!include <C4/C4_Container>
+
+Person(Client, "Клиент")
+Person(SupportStaff, "Оператор")
+Person(Manager, "Менеджер")
+
+System_Boundary(SupportSystem, "Система службы поддержки"){
+    Container(Frontend, "Фронтенд", "Vue + Vue Router + Pinia")
+    Container(Backend, "Бэкенд", "ASP.NET Core 8+")
+    ContainerDb(Database, "База данных", "PostgreSQL 16+")
+    Container(Files, "Хранилище файлов", "S3-like")
+
+    Rel(Frontend, Backend, "Получает информацию")
+    Rel(Frontend, Files, "Загружает вложения сообщений")
+    Rel_U(Backend, Database, "Сохраняет данные")
+}
+System_Ext(Prometheus, "Prometheus")
+
+Rel(Client, Frontend, "Обращается в")
+Rel(SupportStaff, Frontend, "Обрабатывает обращения")
+Rel(Manager, Frontend, "Контролирует работу сотрудников")
+
+Rel(Backend, Prometheus, "Экспортирует бизнес-метрики")
+
+
+@enduml
